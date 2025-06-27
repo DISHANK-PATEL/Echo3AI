@@ -25,13 +25,13 @@ const HowItWorks = () => {
   ];
 
   return (
-    <section className="py-20 px-4 relative">
+    <section className="py-20 px-4 relative bg-black">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
             How Echo3AI Works
           </h2>
-          <p className="text-xl text-white/70 max-w-3xl mx-auto">
+          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
             From upload to engagement in three simple steps
           </p>
         </div>
@@ -39,21 +39,21 @@ const HowItWorks = () => {
         <div className="grid lg:grid-cols-3 gap-8 lg:gap-12">
           {steps.map((step, index) => (
             <div key={index} className="relative">
-              <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-3xl p-8 hover:bg-white/15 transition-all duration-300 hover:scale-105">
-                <div className={`text-6xl font-bold bg-gradient-to-r ${step.color} text-transparent bg-clip-text mb-6`}>
+              <div className="bg-gray-900/50 backdrop-blur-sm border border-gray-700/50 rounded-3xl p-8 hover:bg-gray-800/50 transition-all duration-500 hover:scale-105 transform-gpu hover:-translate-y-4 cursor-pointer group shadow-2xl hover:shadow-blue-500/10">
+                <div className={`text-6xl font-bold bg-gradient-to-r ${step.color} text-transparent bg-clip-text mb-6 group-hover:scale-110 transition-transform duration-500 transform-gpu`}>
                   {step.number}
                 </div>
-                <h3 className="text-2xl font-bold text-white mb-4">
+                <h3 className="text-2xl font-bold text-white mb-4 group-hover:text-blue-300 transition-colors duration-300">
                   {step.title}
                 </h3>
-                <p className="text-white/70 leading-relaxed text-lg">
+                <p className="text-gray-300 leading-relaxed text-lg group-hover:text-gray-200 transition-colors duration-300">
                   {step.description}
                 </p>
               </div>
               
               {index < steps.length - 1 && (
                 <div className="hidden lg:block absolute top-1/2 -right-6 transform -translate-y-1/2">
-                  <ArrowDown className="h-8 w-8 text-white/30 rotate-90" />
+                  <ArrowDown className="h-8 w-8 text-gray-500 rotate-90 animate-pulse" />
                 </div>
               )}
             </div>

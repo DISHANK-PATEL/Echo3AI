@@ -25,13 +25,13 @@ const Testimonials = () => {
   ];
 
   return (
-    <section className="py-20 px-4 relative">
+    <section className="py-20 px-4 relative bg-black">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
             Trusted by Early Adopters
           </h2>
-          <p className="text-xl text-white/70 max-w-3xl mx-auto">
+          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
             Join podcasters and listeners who are already experiencing the future of decentralized media
           </p>
         </div>
@@ -40,25 +40,25 @@ const Testimonials = () => {
           {testimonials.map((testimonial, index) => (
             <Card 
               key={index}
-              className="bg-white/10 backdrop-blur-sm border-white/20 hover:bg-white/15 transition-all duration-300 hover:scale-105"
+              className="bg-gray-900/50 backdrop-blur-sm border-gray-700/50 hover:bg-gray-800/50 transition-all duration-500 hover:scale-105 transform-gpu hover:-translate-y-2 cursor-pointer group shadow-2xl hover:shadow-blue-500/10"
             >
               <CardContent className="p-8">
                 <div className="mb-6">
-                  <div className="text-4xl text-blue-400 mb-4">"</div>
-                  <p className="text-white/80 leading-relaxed italic">
+                  <div className="text-4xl text-blue-400 mb-4 group-hover:text-blue-300 transition-colors">"</div>
+                  <p className="text-gray-300 leading-relaxed italic group-hover:text-gray-200 transition-colors">
                     {testimonial.quote}
                   </p>
                 </div>
                 
                 <div className="flex items-center space-x-4">
-                  <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-teal-500 rounded-full flex items-center justify-center text-white font-bold">
+                  <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-teal-500 rounded-full flex items-center justify-center text-white font-bold group-hover:scale-110 transition-transform duration-300">
                     {testimonial.avatar}
                   </div>
                   <div>
-                    <div className="text-white font-semibold">
+                    <div className="text-white font-semibold group-hover:text-blue-300 transition-colors">
                       {testimonial.author}
                     </div>
-                    <div className="text-white/60 text-sm">
+                    <div className="text-gray-400 text-sm group-hover:text-gray-300 transition-colors">
                       {testimonial.title}
                     </div>
                   </div>

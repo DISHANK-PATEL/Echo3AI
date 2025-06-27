@@ -38,13 +38,13 @@ const Features = () => {
   ];
 
   return (
-    <section className="py-20 px-4 relative">
+    <section className="py-20 px-4 relative bg-black">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
             Powered by Next-Gen Technology
           </h2>
-          <p className="text-xl text-white/70 max-w-3xl mx-auto">
+          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
             Experience the perfect blend of AI intelligence and decentralized infrastructure
           </p>
         </div>
@@ -53,16 +53,16 @@ const Features = () => {
           {features.map((feature, index) => (
             <Card 
               key={index}
-              className="bg-white/10 backdrop-blur-sm border-white/20 hover:bg-white/15 transition-all duration-300 hover:scale-105 hover:shadow-2xl group"
+              className="bg-gray-900/50 backdrop-blur-sm border-gray-700/50 hover:bg-gray-800/50 transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/10 group transform-gpu hover:-translate-y-2 cursor-pointer"
             >
               <CardContent className="p-8">
-                <div className={`w-16 h-16 rounded-2xl bg-gradient-to-r ${feature.gradient} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
+                <div className={`w-16 h-16 rounded-2xl bg-gradient-to-r ${feature.gradient} flex items-center justify-center mb-6 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 transform-gpu shadow-lg`}>
                   <feature.icon className="h-8 w-8 text-white" />
                 </div>
-                <h3 className="text-xl font-bold text-white mb-4">
+                <h3 className="text-xl font-bold text-white mb-4 group-hover:text-blue-300 transition-colors duration-300">
                   {feature.title}
                 </h3>
-                <p className="text-white/70 leading-relaxed">
+                <p className="text-gray-300 leading-relaxed group-hover:text-gray-200 transition-colors duration-300">
                   {feature.description}
                 </p>
               </CardContent>
