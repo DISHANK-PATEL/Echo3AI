@@ -119,6 +119,20 @@ export default {
 					'100%': {
 						transform: 'rotateX(360deg) rotateY(360deg)'
 					}
+				},
+				'sparkle-fade': {
+					'0%': {
+						opacity: '1',
+						transform: 'scale(1) rotate(0deg)'
+					},
+					'50%': {
+						opacity: '0.8',
+						transform: 'scale(1.2) rotate(180deg)'
+					},
+					'100%': {
+						opacity: '0',
+						transform: 'scale(0.8) rotate(360deg)'
+					}
 				}
 			},
 			animation: {
@@ -127,7 +141,8 @@ export default {
 				'fade-in': 'fade-in 0.6s ease-out forwards',
 				'float': 'float 3s ease-in-out infinite',
 				'glow': 'glow 2s ease-in-out infinite alternate',
-				'rotate-3d': 'rotate-3d 20s linear infinite'
+				'rotate-3d': 'rotate-3d 20s linear infinite',
+				'sparkle-fade': 'sparkle-fade 1s ease-out forwards'
 			}
 		}
 	},

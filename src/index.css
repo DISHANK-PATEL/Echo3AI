@@ -93,6 +93,7 @@
 
   body {
     @apply bg-background text-foreground;
+    cursor: none;
   }
 }
 
@@ -117,4 +118,25 @@
   .delay-1000 {
     animation-delay: 1s;
   }
+}
+
+/* Custom cursor sparkle animation */
+@keyframes sparkle-fade {
+  0% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.2) rotate(180deg);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.8) rotate(360deg);
+  }
+}
+
+/* Hide default cursor on interactive elements */
+button, a, input, textarea, select {
+  cursor: none !important;
 }

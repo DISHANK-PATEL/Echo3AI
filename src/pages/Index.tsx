@@ -7,17 +7,23 @@ import LiveDemo from '../components/LiveDemo';
 import Security from '../components/Security';
 import Testimonials from '../components/Testimonials';
 import Footer from '../components/Footer';
+import CustomCursor from '../components/CustomCursor';
+import PodcastVisuals from '../components/PodcastVisuals';
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-black">
-      <Hero />
-      <Features />
-      <HowItWorks />
-      <LiveDemo />
-      <Security />
-      <Testimonials />
-      <Footer />
+    <div className="min-h-screen bg-black cursor-none relative overflow-hidden">
+      <CustomCursor />
+      <PodcastVisuals />
+      <div className="relative z-10">
+        <Hero />
+        <Features />
+        <HowItWorks />
+        <LiveDemo />
+        <Security />
+        <Testimonials />
+        <Footer />
+      </div>
     </div>
   );
 };
