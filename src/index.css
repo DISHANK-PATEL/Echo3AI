@@ -93,7 +93,6 @@
 
   body {
     @apply bg-background text-foreground;
-    cursor: none;
   }
 }
 
@@ -120,22 +119,6 @@
   }
 }
 
-/* Optimized cursor sparkle animation */
-@keyframes sparkle-fade {
-  0% {
-    opacity: 1;
-    transform: scale(1) rotate(0deg);
-  }
-  50% {
-    opacity: 0.8;
-    transform: scale(1.1) rotate(180deg);
-  }
-  100% {
-    opacity: 0;
-    transform: scale(0.9) rotate(360deg);
-  }
-}
-
 /* Custom animations for floating elements */
 @keyframes float {
   0%, 100% {
@@ -148,11 +131,6 @@
 
 .animate-float {
   animation: float 6s ease-in-out infinite;
-}
-
-/* Hide default cursor on interactive elements */
-button, a, input, textarea, select {
-  cursor: none !important;
 }
 
 /* Performance optimizations */

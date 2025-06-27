@@ -8,13 +8,11 @@ import LiveDemo from '../components/LiveDemo';
 import Security from '../components/Security';
 import Testimonials from '../components/Testimonials';
 import Footer from '../components/Footer';
-import CustomCursor from '../components/CustomCursor';
 import PodcastVisuals from '../components/PodcastVisuals';
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-black cursor-none relative overflow-hidden">
-      <CustomCursor />
+    <div className="min-h-screen bg-black relative overflow-hidden">
       <PodcastVisuals />
       <div className="relative z-10">
         <Hero />
