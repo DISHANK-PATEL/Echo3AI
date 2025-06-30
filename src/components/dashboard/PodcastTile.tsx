@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Heart, Play, Users, Clock } from 'lucide-react';
 import TipModal from './TipModal';
+import PodcastActionButtons from './PodcastActionButtons';
 
 interface PodcastTileProps {
   podcast: {
@@ -39,7 +40,9 @@ const PodcastTile: React.FC<PodcastTileProps> = ({ podcast, index }) => {
   return (
     <>
       <div
-        className={`group relative bg-gray-900/30 backdrop-blur-sm rounded-2xl overflow-hidden border border-gray-700/30 hover:border-teal-400/30 transition-all duration-500 transform-gpu hover:scale-[1.02] hover:-translate-y-2 cursor-pointer animate-fade-in`}
+        className={`group relative bg-gray-900/30 backdrop-blur-sm rounded-2xl overflow-hidden border border-gray-700/30 hover:border-teal-400/30 transition-all duration-500 transform-gpu hover:scale-[1.02] hover:-translate-y-2 cursor-pointer animate-fade-in ${
+          isHovered ? 'perspective-1000 rotate-x-2 rotate-y-2' : ''
+        }`}
         style={{
           animationDelay: `${index * 100}ms`,
         }}
@@ -97,6 +100,9 @@ const PodcastTile: React.FC<PodcastTileProps> = ({ podcast, index }) => {
               <Play className="w-8 h-8 fill-current" />
             </Button>
           </div>
+
+          {/* Action Buttons Overlay */}
+          <PodcastActionButtons podcast={podcast} isVisible={isHovered} />
         </div>
 
         {/* Content */}
