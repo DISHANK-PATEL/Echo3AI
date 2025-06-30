@@ -1,9 +1,11 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { ArrowDown } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const Hero = () => {
+  const navigate = useNavigate();
+
   return (
     <section className="relative min-h-screen flex items-center justify-center px-4 overflow-hidden bg-black">
       {/* 3D Background Effects */}
@@ -51,6 +53,7 @@ const Hero = () => {
           <Button 
             variant="ghost" 
             size="lg"
+            onClick={() => navigate('/dashboard')}
             className="text-white hover:text-blue-300 hover:bg-gray-800/50 px-8 py-4 text-lg font-semibold rounded-xl transition-all duration-300 border border-gray-700/50 hover:border-gray-600/50 hover:scale-105 transform-gpu"
           >
             Learn How It Works
