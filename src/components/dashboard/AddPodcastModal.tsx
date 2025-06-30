@@ -1,15 +1,24 @@
 
+
 import React, { useState } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
-import { Plus, X, Upload, Music, Video, Mic, Check, AlertTriangle, Shield, RefreshCw } from 'lucide-react';
+import { Plus, X, Upload, Music, Video, Mic, Check, AlertTriangle, Shield, RefreshCw, FileText, AlertCircle, ChevronDown, ChevronUp } from 'lucide-react';
 
 interface FactCheckResult {
   id: string;
   statement: string;
   status: 'verified' | 'unverified' | 'flagged';
   details: string;
+}
+
+interface LanguageFlag {
+  id: string;
+  phrase: string;
+  severity: 'mild' | 'severe';
+  timestamp: string;
+  context: string;
 }
 
 const AddPodcastModal = () => {
@@ -19,7 +28,11 @@ const AddPodcastModal = () => {
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const [factCheckResults, setFactCheckResults] = useState<FactCheckResult[]>([]);
+  const [aiSummary, setAiSummary] = useState('');
+  const [languageFlags, setLanguageFlags] = useState<LanguageFlag[]>([]);
   const [isDragOver, setIsDragOver] = useState(false);
+  const [expandedSummary, setExpandedSummary] = useState(false);
+  const [expandedLanguageContext, setExpandedLanguageContext] = useState<string[]>([]);
 
   const mockFactCheckResults: FactCheckResult[] = [
     {
@@ -48,6 +61,28 @@ const AddPodcastModal = () => {
     }
   ];
 
+  const mockAiSummary = {
+    brief: 'This episode discusses emerging technologies in AI, covering recent developments in language models, ethical considerations, and future implications for various industries.',
+    full: 'This episode provides an in-depth analysis of emerging technologies in artificial intelligence, focusing on recent breakthroughs in large language models and their applications. The hosts explore ethical considerations surrounding AI development, including bias mitigation and responsible deployment strategies. Key topics include the impact of AI on employment, healthcare applications, and the evolving regulatory landscape. The discussion also covers future implications for various industries, from finance to creative sectors, and examines both opportunities and challenges that lie ahead in the AI revolution.'
+  };
+
+  const mockLanguageFlags: LanguageFlag[] = [
+    {
+      id: '1',
+      phrase: 'damn',
+      severity: 'mild',
+      timestamp: '12:34',
+      context: 'Well, damn, that was unexpected but really impressive'
+    },
+    {
+      id: '2',
+      phrase: 'hell',
+      severity: 'mild',
+      timestamp: '24:15',
+      context: 'What the hell is going on with this technology'
+    }
+  ];
+
   const handleFileUpload = (file: File) => {
     setUploadedFile(file);
     setIsUploading(true);
@@ -73,6 +108,8 @@ const AddPodcastModal = () => {
     // Simulate AI analysis
     setTimeout(() => {
       setFactCheckResults(mockFactCheckResults);
+      setAiSummary(mockAiSummary.brief);
+      setLanguageFlags(mockLanguageFlags);
       setIsAnalyzing(false);
     }, 3000);
   };
@@ -122,18 +159,36 @@ const AddPodcastModal = () => {
     }
   };
 
+  const getSeverityIcon = (severity: string) => {
+    return severity === 'severe' 
+      ? <AlertCircle className="w-4 h-4 text-red-400" />
+      : <AlertTriangle className="w-4 h-4 text-yellow-400" />;
+  };
+
+  const toggleLanguageContext = (id: string) => {
+    setExpandedLanguageContext(prev => 
+      prev.includes(id) 
+        ? prev.filter(item => item !== id)
+        : [...prev, id]
+    );
+  };
+
   const resetModal = () => {
     setUploadedFile(null);
     setUploadProgress(0);
     setIsUploading(false);
     setIsAnalyzing(false);
     setFactCheckResults([]);
+    setAiSummary('');
+    setLanguageFlags([]);
     setIsDragOver(false);
+    setExpandedSummary(false);
+    setExpandedLanguageContext([]);
   };
 
   const handleClose = () => {
     setIsOpen(false);
-    setTimeout(resetModal, 300); // Reset after modal closes
+    setTimeout(resetModal, 300);
   };
 
   return (
@@ -147,7 +202,7 @@ const AddPodcastModal = () => {
         </Button>
       </DialogTrigger>
       
-      <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto bg-black/95 border-2 border-teal-400/30 shadow-2xl shadow-teal-400/20 backdrop-blur-md">
+      <DialogContent className="max-w-5xl max-h-[90vh] overflow-y-auto bg-black/95 border-2 border-teal-400/30 shadow-2xl shadow-teal-400/20 backdrop-blur-md">
         {/* Progress Bar */}
         {isUploading && (
           <div className="absolute top-0 left-0 right-0 h-1 bg-gray-800 overflow-hidden rounded-t-lg">
@@ -246,14 +301,14 @@ const AddPodcastModal = () => {
             </div>
           )}
 
-          {/* AI Fact-Check Section */}
+          {/* AI Analysis Sections */}
           {uploadedFile && !isUploading && (
-            <div className="space-y-4">
+            <div className="space-y-6">
               <div className="flex items-center justify-between">
-                <h3 className="text-xl font-bold text-white flex items-center">
-                  <Shield className="w-5 h-5 text-teal-400 mr-2" />
-                  AI Fact-Check Report
-                </h3>
+                <h2 className="text-2xl font-bold text-white flex items-center">
+                  <Shield className="w-6 h-6 text-teal-400 mr-2" />
+                  AI Analysis Report
+                </h2>
                 <Button
                   variant="outline"
                   size="sm"
@@ -262,7 +317,7 @@ const AddPodcastModal = () => {
                   className="border-gray-600 text-gray-300 hover:bg-gray-800"
                 >
                   <RefreshCw className={`w-4 h-4 mr-1 ${isAnalyzing ? 'animate-spin' : ''}`} />
-                  Re-run Analysis
+                  Re-run AI Checks
                 </Button>
               </div>
 
@@ -271,38 +326,127 @@ const AddPodcastModal = () => {
                   <div className="animate-spin w-8 h-8 border-2 border-teal-400 border-t-transparent rounded-full mx-auto mb-4"></div>
                   <p className="text-gray-300">Analyzing content...</p>
                 </div>
-              ) : factCheckResults.length > 0 ? (
-                <div className="bg-gray-900/80 rounded-xl border border-gray-700/50 overflow-hidden">
-                  <div className="grid grid-cols-12 gap-4 p-4 bg-gray-800/50 text-sm font-medium text-gray-300 border-b border-gray-700/50">
-                    <div className="col-span-6">Statement / Question</div>
-                    <div className="col-span-2">Status</div>
-                    <div className="col-span-4">Details</div>
-                  </div>
-                  
-                  {factCheckResults.map((result, index) => (
-                    <div 
-                      key={result.id}
-                      className={`grid grid-cols-12 gap-4 p-4 border-b border-gray-700/30 last:border-b-0 hover:bg-gray-800/30 transition-colors animate-fade-in`}
-                      style={{ animationDelay: `${index * 100}ms` }}
-                    >
-                      <div className="col-span-6 text-white">{result.statement}</div>
-                      <div className="col-span-2 flex items-center space-x-2">
-                        {getStatusIcon(result.status)}
-                        <span className={`text-sm font-medium ${
-                          result.status === 'verified' ? 'text-green-400' :
-                          result.status === 'flagged' ? 'text-red-400' : 'text-yellow-400'
-                        }`}>
-                          {getStatusText(result.status)}
-                        </span>
-                      </div>
-                      <div className="col-span-4 text-gray-400 text-sm">{result.details}</div>
+              ) : (
+                <div className="grid gap-6">
+                  {/* AI Fact-Check Report */}
+                  <div className="bg-gray-900/80 rounded-xl border border-gray-700/50 overflow-hidden">
+                    <div className="p-4 bg-gray-800/50 border-b border-gray-700/50">
+                      <h3 className="text-xl font-bold text-white flex items-center">
+                        <Shield className="w-5 h-5 text-teal-400 mr-2" />
+                        AI Fact-Check Report
+                      </h3>
                     </div>
-                  ))}
+                    
+                    {factCheckResults.length > 0 && (
+                      <>
+                        <div className="grid grid-cols-12 gap-4 p-4 bg-gray-800/30 text-sm font-medium text-gray-300 border-b border-gray-700/50">
+                          <div className="col-span-6">Statement / Claim</div>
+                          <div className="col-span-2">Status</div>
+                          <div className="col-span-4">Details</div>
+                        </div>
+                        
+                        {factCheckResults.map((result, index) => (
+                          <div 
+                            key={result.id}
+                            className={`grid grid-cols-12 gap-4 p-4 border-b border-gray-700/30 last:border-b-0 hover:bg-gray-800/30 transition-colors animate-fade-in`}
+                            style={{ animationDelay: `${index * 100}ms` }}
+                          >
+                            <div className="col-span-6 text-white">{result.statement}</div>
+                            <div className="col-span-2 flex items-center space-x-2">
+                              {getStatusIcon(result.status)}
+                              <span className={`text-sm font-medium ${
+                                result.status === 'verified' ? 'text-green-400' :
+                                result.status === 'flagged' ? 'text-red-400' : 'text-yellow-400'
+                              }`}>
+                                {getStatusText(result.status)}
+                              </span>
+                            </div>
+                            <div className="col-span-4 text-gray-400 text-sm">{result.details}</div>
+                          </div>
+                        ))}
+                      </>
+                    )}
+                  </div>
+
+                  {/* AI Summary */}
+                  <div className="bg-gray-900/80 rounded-xl border border-gray-700/50 overflow-hidden">
+                    <div className="p-4 bg-gray-800/50 border-b border-gray-700/50">
+                      <h3 className="text-xl font-bold text-white flex items-center">
+                        <FileText className="w-5 h-5 text-blue-400 mr-2" />
+                        AI Summary
+                      </h3>
+                    </div>
+                    
+                    <div className="p-6">
+                      <p className="text-gray-300 leading-relaxed mb-4">
+                        {expandedSummary ? mockAiSummary.full : mockAiSummary.brief}
+                      </p>
+                      <button
+                        onClick={() => setExpandedSummary(!expandedSummary)}
+                        className="flex items-center text-teal-400 hover:text-teal-300 transition-colors text-sm font-medium"
+                      >
+                        {expandedSummary ? (
+                          <>
+                            <ChevronUp className="w-4 h-4 mr-1" />
+                            Show Less
+                          </>
+                        ) : (
+                          <>
+                            <ChevronDown className="w-4 h-4 mr-1" />
+                            Show Full Summary
+                          </>
+                        )}
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Language Safety Check */}
+                  <div className="bg-gray-900/80 rounded-xl border border-gray-700/50 overflow-hidden">
+                    <div className="p-4 bg-gray-800/50 border-b border-gray-700/50">
+                      <h3 className="text-xl font-bold text-white flex items-center">
+                        <AlertTriangle className="w-5 h-5 text-yellow-400 mr-2" />
+                        Language Safety Check
+                      </h3>
+                    </div>
+                    
+                    {languageFlags.length > 0 ? (
+                      <div className="divide-y divide-gray-700/30">
+                        {languageFlags.map((flag) => (
+                          <div key={flag.id} className="p-4 hover:bg-gray-800/30 transition-colors">
+                            <div className="flex items-center justify-between mb-2">
+                              <div className="flex items-center space-x-3">
+                                {getSeverityIcon(flag.severity)}
+                                <span className="text-white font-medium">"{flag.phrase}"</span>
+                                <span className="text-gray-400 text-sm">at {flag.timestamp}</span>
+                              </div>
+                              <button
+                                onClick={() => toggleLanguageContext(flag.id)}
+                                className="text-teal-400 hover:text-teal-300 transition-colors text-sm"
+                              >
+                                {expandedLanguageContext.includes(flag.id) ? 'Hide Context' : 'Show Context'}
+                              </button>
+                            </div>
+                            {expandedLanguageContext.includes(flag.id) && (
+                              <div className="mt-2 p-3 bg-gray-800/50 rounded-lg border-l-2 border-yellow-400/50">
+                                <p className="text-gray-300 text-sm italic">"{flag.context}"</p>
+                              </div>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="p-6 text-center">
+                        <Check className="w-8 h-8 text-green-400 mx-auto mb-2" />
+                        <p className="text-green-400 font-medium">No inappropriate language detected</p>
+                        <p className="text-gray-400 text-sm">Content appears clean and suitable for all audiences</p>
+                      </div>
+                    )}
+                  </div>
                 </div>
-              ) : null}
+              )}
 
               {/* Action Buttons */}
-              {factCheckResults.length > 0 && (
+              {(factCheckResults.length > 0 || aiSummary || languageFlags.length >= 0) && !isAnalyzing && (
                 <div className="flex justify-end space-x-4 pt-4">
                   <Button
                     variant="outline"
@@ -327,3 +471,4 @@ const AddPodcastModal = () => {
 };
 
 export default AddPodcastModal;
+
