@@ -133,6 +133,20 @@
   animation: float 6s ease-in-out infinite;
 }
 
+/* Chat widget glow animation */
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(20, 184, 166, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(20, 184, 166, 0.6);
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
 /* Performance optimizations */
 .will-change-transform {
   will-change: transform;
