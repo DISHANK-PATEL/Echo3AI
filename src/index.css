@@ -167,3 +167,86 @@
 .will-change-transform {
   will-change: transform;
 }
+
+/* Resizable panel styles */
+.react-resizable-handle {
+  position: relative;
+}
+
+.react-resizable-handle::before {
+  content: 'Drag to resize';
+  position: absolute;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1000;
+  transition: opacity 0.2s ease;
+}
+
+.react-resizable-handle:hover::before {
+  opacity: 1;
+}
+
+/* Position tooltips for different handles */
+.react-resizable-handle-se::before {
+  bottom: 100%;
+  right: 0;
+  margin-bottom: 4px;
+}
+
+.react-resizable-handle-s::before {
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: 4px;
+}
+
+.react-resizable-handle-sw::before {
+  bottom: 100%;
+  left: 0;
+  margin-bottom: 4px;
+}
+
+.react-resizable-handle-e::before {
+  top: 50%;
+  left: 100%;
+  transform: translateY(-50%);
+  margin-left: 4px;
+}
+
+.react-resizable-handle-w::before {
+  top: 50%;
+  right: 100%;
+  transform: translateY(-50%);
+  margin-right: 4px;
+}
+
+.react-resizable-handle-ne::before {
+  top: 100%;
+  right: 0;
+  margin-top: 4px;
+}
+
+.react-resizable-handle-n::before {
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 4px;
+}
+
+.react-resizable-handle-nw::before {
+  top: 100%;
+  left: 0;
+  margin-top: 4px;
+}
+
+/* Enhanced resize handle hover effects */
+.react-rnd [class*="react-resizable-handle"]:hover {
+  background: rgba(20, 184, 166, 0.8) !important;
+  box-shadow: 0 0 8px rgba(20, 184, 166, 0.6);
+}
