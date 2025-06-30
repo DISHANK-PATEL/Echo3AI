@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Search, Plus, Wallet } from 'lucide-react';
+import { Search, Wallet } from 'lucide-react';
+import AddPodcastModal from './AddPodcastModal';
 
 const DashboardHeader = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -40,20 +40,12 @@ const DashboardHeader = () => {
 
           {/* Action Buttons */}
           <div className="flex items-center space-x-4">
-            <Button 
-              className="bg-gradient-to-r from-teal-600 to-blue-600 hover:from-teal-700 hover:to-blue-700 text-white px-6 py-3 rounded-xl font-semibold shadow-lg hover:shadow-teal-500/25 transition-all duration-300 hover:scale-105 transform-gpu hover:-translate-y-0.5"
-            >
-              <Plus className="w-5 h-5 mr-2" />
-              Add Podcast
-            </Button>
+            <AddPodcastModal />
             
-            <Button 
-              variant="outline"
-              className="border-gray-700/50 hover:border-teal-400/50 text-white hover:text-teal-300 px-6 py-3 rounded-xl font-semibold transition-all duration-300 hover:scale-105 transform-gpu hover:-translate-y-0.5 bg-gray-900/30 hover:bg-gray-800/50"
-            >
-              <Wallet className="w-5 h-5 mr-2" />
-              Connect Wallet
-            </Button>
+            <button className="border border-gray-700/50 hover:border-teal-400/50 text-white hover:text-teal-300 px-6 py-3 rounded-xl font-semibold transition-all duration-300 hover:scale-105 transform-gpu hover:-translate-y-0.5 bg-gray-900/30 hover:bg-gray-800/50 flex items-center space-x-2">
+              <Wallet className="w-5 h-5" />
+              <span>Connect Wallet</span>
+            </button>
           </div>
         </div>
       </div>
