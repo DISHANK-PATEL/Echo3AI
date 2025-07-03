@@ -127,13 +127,9 @@ const EnhancedPodcastTile: React.FC<EnhancedPodcastTileProps> = ({ podcast, inde
                 size="sm"
                 onClick={(e) => {
                   e.stopPropagation();
-                  setShowFactCheck(!showFactCheck);
+                  setShowFactCheck(true);
                 }}
-                className={`px-3 py-1 h-8 text-white border rounded-lg shadow-lg backdrop-blur-sm transition-all duration-300 hover:scale-105 transform-gpu text-xs font-medium ${
-                  showFactCheck 
-                    ? 'bg-yellow-600/80 border-yellow-400/50 hover:border-yellow-400 hover:shadow-yellow-400/50' 
-                    : 'bg-black/70 hover:bg-yellow-600/80 border-yellow-400/50 hover:border-yellow-400 hover:shadow-yellow-400/50'
-                }`}
+                className="px-3 py-1 h-8 bg-black/70 hover:bg-yellow-600/80 text-white border border-yellow-400/50 hover:border-yellow-400 rounded-lg shadow-lg backdrop-blur-sm transition-all duration-300 hover:scale-105 transform-gpu hover:shadow-yellow-400/50 text-xs font-medium"
               >
                 <ShieldCheck className="w-3 h-3 mr-1" />
                 Fact Check
@@ -191,10 +187,14 @@ const EnhancedPodcastTile: React.FC<EnhancedPodcastTileProps> = ({ podcast, inde
             isHovered ? 'opacity-100' : 'opacity-0'
           } bg-gradient-to-r from-teal-500/5 to-blue-500/5 shadow-2xl shadow-teal-500/10`}></div>
         </div>
-
-        {/* Fact Check Accordion */}
-        <FactCheckAccordion isOpen={showFactCheck} podcast={podcast} />
       </div>
+
+      {/* Fact Check Component */}
+      <FactCheckAccordion 
+        isOpen={showFactCheck} 
+        onClose={() => setShowFactCheck(false)}
+        podcast={podcast} 
+      />
 
       {/* Chat Widget */}
       <ChatWidget
