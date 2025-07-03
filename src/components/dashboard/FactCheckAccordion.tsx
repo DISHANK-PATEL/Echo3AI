@@ -10,6 +10,12 @@ interface FactCheckAccordionProps {
   };
 }
 
+interface FactCheckSection {
+  title: string;
+  content: string;
+  sources?: string[];
+}
+
 const FactCheckAccordion: React.FC<FactCheckAccordionProps> = ({ isOpen, podcast }) => {
   const [openSections, setOpenSections] = useState<Set<string>>(new Set());
 
@@ -23,7 +29,7 @@ const FactCheckAccordion: React.FC<FactCheckAccordionProps> = ({ isOpen, podcast
     setOpenSections(newOpenSections);
   };
 
-  const factCheckData = {
+  const factCheckData: Record<string, FactCheckSection> = {
     'factual-verification': {
       title: 'Factual Verification',
       content: 'Claims made about AI technology adoption rates have been cross-referenced with industry reports. 3 out of 5 statistics mentioned are accurate according to recent studies.',

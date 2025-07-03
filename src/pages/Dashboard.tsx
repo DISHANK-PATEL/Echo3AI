@@ -4,7 +4,6 @@ import DashboardHeader from '../components/dashboard/DashboardHeader';
 import PodcastGrid from '../components/dashboard/PodcastGrid';
 import DashboardCursor from '../components/dashboard/DashboardCursor';
 import DashboardBackground from '../components/dashboard/DashboardBackground';
-import ChatWidget from '../components/dashboard/ChatWidget';
 
 const Dashboard = () => {
   return (
@@ -15,7 +14,6 @@ const Dashboard = () => {
         <DashboardHeader />
         <PodcastGrid />
       </div>
-      <ChatWidget />
     </div>
   );
 };
