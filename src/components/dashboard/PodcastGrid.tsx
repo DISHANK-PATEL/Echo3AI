@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
-import PodcastTile from './PodcastTile';
+import EnhancedPodcastTile from './EnhancedPodcastTile';
 import { Skeleton } from '@/components/ui/skeleton';
 
 // Mock data for podcasts
@@ -71,7 +71,7 @@ const PodcastGrid = () => {
       {/* Grid Container */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 auto-rows-max">
         {podcasts.map((podcast, index) => (
-          <PodcastTile 
+          <EnhancedPodcastTile 
             key={podcast.id} 
             podcast={podcast} 
             index={index}
