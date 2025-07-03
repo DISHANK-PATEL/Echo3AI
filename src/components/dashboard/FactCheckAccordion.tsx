@@ -29,6 +29,8 @@ const FactCheckAccordion: React.FC<FactCheckAccordionProps> = ({ isOpen, onClose
   const [showResults, setShowResults] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
 
+  console.log('FactCheckAccordion render - isOpen:', isOpen, 'showDialog:', showDialog, 'showResults:', showResults);
+
   const toggleSection = (section: string) => {
     const newOpenSections = new Set(openSections);
     if (newOpenSections.has(section)) {
@@ -40,10 +42,12 @@ const FactCheckAccordion: React.FC<FactCheckAccordionProps> = ({ isOpen, onClose
   };
 
   const handleFactCheck = () => {
+    console.log('handleFactCheck called');
     setShowDialog(true);
   };
 
   const handleOptionSelect = (option: 'previous' | 'new') => {
+    console.log('Option selected:', option);
     setSelectedOption(option);
     if (option === 'previous') {
       setShowResults(true);
@@ -54,15 +58,30 @@ const FactCheckAccordion: React.FC<FactCheckAccordionProps> = ({ isOpen, onClose
   const handleSubmitStatement = async () => {
     if (!statement.trim()) return;
     
+    console.log('Submitting statement:', statement);
     setIsGenerating(true);
     setShowDialog(false);
     
     // Simulate API call delay
     setTimeout(() => {
+      console.log('Analysis complete');
       setIsGenerating(false);
       setShowResults(true);
     }, 2000);
   };
+
+  // React to isOpen prop changes
+  React.useEffect(() => {
+    console.log('isOpen changed to:', isOpen);
+    if (isOpen) {
+      setShowDialog(true);
+    } else {
+      setShowDialog(false);
+      setShowResults(false);
+      setSelectedOption(null);
+      setStatement('');
+    }
+  }, [isOpen]);
 
   const factCheckData: Record<string, FactCheckSection> = {
     'factual-verification': {
@@ -107,11 +126,20 @@ const FactCheckAccordion: React.FC<FactCheckAccordionProps> = ({ isOpen, onClose
     }
   };
 
-  if (!isOpen) return null;
+  if (!isOpen) {
+    console.log('FactCheckAccordion not rendering - isOpen is false');
+    return null;
+  }
 
   if (showDialog) {
     return (
-      <Dialog open={showDialog} onOpenChange={setShowDialog}>
+      <Dialog open={showDialog} onOpenChange={(open) => {
+        console.log('Dialog onOpenChange:', open);
+        if (!open) {
+          setShowDialog(false);
+          onClose();
+        }
+      }}>
         <DialogContent className="bg-gray-900 border-teal-400/30 text-white max-w-md">
           <DialogHeader>
             <DialogTitle className="text-teal-300">Echo3AI Fact Check</DialogTitle>

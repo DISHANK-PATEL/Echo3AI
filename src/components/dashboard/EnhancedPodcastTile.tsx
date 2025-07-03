@@ -29,6 +29,18 @@ const EnhancedPodcastTile: React.FC<EnhancedPodcastTileProps> = ({ podcast, inde
   const [showChat, setShowChat] = useState(false);
   const [showFactCheck, setShowFactCheck] = useState(false);
 
+  const handleFactCheckClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    console.log('Fact check button clicked');
+    setShowFactCheck(true);
+    console.log('showFactCheck set to:', true);
+  };
+
+  const handleFactCheckClose = () => {
+    console.log('Fact check closing');
+    setShowFactCheck(false);
+  };
+
   const getGenreColor = (genre: string) => {
     const colors = {
       'Technology': 'from-blue-500 to-cyan-500',
@@ -39,6 +51,8 @@ const EnhancedPodcastTile: React.FC<EnhancedPodcastTileProps> = ({ podcast, inde
     };
     return colors[genre as keyof typeof colors] || 'from-gray-500 to-gray-600';
   };
+
+  console.log('EnhancedPodcastTile render - showFactCheck:', showFactCheck);
 
   return (
     <>
@@ -125,10 +139,7 @@ const EnhancedPodcastTile: React.FC<EnhancedPodcastTileProps> = ({ podcast, inde
               {/* Fact Check Button - Bottom Right */}
               <Button
                 size="sm"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setShowFactCheck(true);
-                }}
+                onClick={handleFactCheckClick}
                 className="px-3 py-1 h-8 bg-black/70 hover:bg-yellow-600/80 text-white border border-yellow-400/50 hover:border-yellow-400 rounded-lg shadow-lg backdrop-blur-sm transition-all duration-300 hover:scale-105 transform-gpu hover:shadow-yellow-400/50 text-xs font-medium"
               >
                 <ShieldCheck className="w-3 h-3 mr-1" />
@@ -192,7 +203,7 @@ const EnhancedPodcastTile: React.FC<EnhancedPodcastTileProps> = ({ podcast, inde
       {/* Fact Check Component */}
       <FactCheckAccordion 
         isOpen={showFactCheck} 
-        onClose={() => setShowFactCheck(false)}
+        onClose={handleFactCheckClose}
         podcast={podcast} 
       />
 
