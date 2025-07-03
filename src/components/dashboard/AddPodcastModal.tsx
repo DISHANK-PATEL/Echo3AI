@@ -586,7 +586,7 @@ const AddPodcastModal = () => {
                             </p>
                           )}
                           
-                          {section.sources && (
+                          {'sources' in section && section.sources && (
                             <div className="space-y-3">
                               <h4 className="text-white font-medium text-sm uppercase tracking-wide">Sources:</h4>
                               {section.sources.map((source, index) => (
